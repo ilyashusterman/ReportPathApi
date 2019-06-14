@@ -28,3 +28,7 @@ test:
 .PHONY: smoke
 smoke:
 	$(VERBOSE) nosetests ./
+.PHONY: run
+run:
+	$(VERBOSE) source venv/bin/activate
+	$(VERBOSE) python datapath_report_api.py

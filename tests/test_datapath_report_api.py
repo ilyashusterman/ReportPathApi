@@ -19,6 +19,6 @@ class TestDataPathReportApi(TestCase):
         self.datapath_api_handler = DataPathReportApi()
 
     def test_create_live_report(self):
-        did_created_successfully = self.datapath_api_handler.create_report(self.mock_live_report)
+        create_response, did_created_successfully = self.datapath_api_handler.create_report(self.mock_live_report)
         self.assertTrue(did_created_successfully)
         self.datapath_api_handler.remove_report(self.mock_live_report)
