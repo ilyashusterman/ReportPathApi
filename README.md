@@ -1,4 +1,15 @@
-'''
+##Usage
+
+#### commands:
+
+---
+* Prepate python virtual interpreter via `virtualenv -p python3 venv`
+* install python packages `pip install -r requirements.txt`
+* set databases connections properly ( install mongod from https://docs.mongodb.com/manual/mongo/ firebase setup https://firebase.google.com/docs/admin/setup/ (python firebase-admin))
+* run main `make run`
+
+Documentation:
+---
     General:
     --------
     
@@ -34,5 +45,4 @@
     2. title: "what happened"
     3. subtitle: street
     4. time: timestamp in milis
-   
-'''
+  

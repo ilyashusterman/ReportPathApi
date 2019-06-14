@@ -19,12 +19,11 @@ else
     override VERBOSE:=@
 endif
 
+MONGODB_ARGS:=--username $(DB_USERNAME) --password $(DB_HOST) --host $(DB_HOST) --port $(DB_PORT)
+
 .PHONY: connect_db
 connect_db:
-	$(VERBOSE) mongodb $(MONGODB_ARGS) $(DB_NAME)
-.PHONY: test
-test:
-	$(VERBOSE) nosetests ./
+	$(VERBOSE) mongodb $(MONGODB_ARGS)
 .PHONY: smoke
 smoke:
 	$(VERBOSE) nosetests ./

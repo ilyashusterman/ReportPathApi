@@ -1,25 +1,31 @@
-from unittest import TestCase
-
-from converters.live_report_converter import convert_live_report
+from db.test.DatabaseTestCase import TestDatabaseTestCase
 from db.firebase.firebase_api import FireBaseDataBase
-from models.live_report import LiveReport
-from tests.test_datapath_report_api import get_mock_report
+from db.exceptions import DatabaseException
 
 
-class TestFireBaseDataBase(TestCase):
+class TestFireBaseDataBase(TestDatabaseTestCase):
 
     def setUp(self):
+        super(TestFireBaseDataBase, self).setUp()
         self.firebase_db = FireBaseDataBase()
 
     def test_get_converted_report(self):
-        report_dict_raw = get_mock_report()
-        live_report = LiveReport.load_live_report(report_dict_raw)
-        converted_report = convert_live_report(live_report)
-        converted_report_firebase = self.firebase_db.get_converted_report(converted_report)
+        converted_report_firebase = self.firebase_db.get_converted_report(self.converted_report)
         self.assertIn('color', converted_report_firebase)
         self.assertIn('title', converted_report_firebase)
         self.assertIn('subtitle', converted_report_firebase)
         self.assertIn('time', converted_report_firebase)
         self.assertIsInstance(converted_report_firebase['time'], float)
 
+    def test_validate_report(self):
+        self.assertTrue(self.firebase_db.validate_report(self.converted_report))
 
+    def test_create_report_to_db(self):
+        """
+        should fail and raise DatabaseException
+        because for test environment mongo db is not yet utilized
+        :return:
+        """
+        with self.assertRaises(DatabaseException):
+            converted_report_firebase = self.firebase_db.get_converted_report(self.converted_report)
+            self.firebase_db.create_report_to_db(converted_report_firebase)
