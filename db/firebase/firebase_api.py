@@ -32,7 +32,7 @@ class FireBaseDataBase(BaseDatabase):
         self.client = self.init_firebase_client(secret, email, debug, admin)
 
     def validate_report(self, report):
-        pass
+        return True
 
     def get_converted_report(self, report):
         return {
@@ -46,7 +46,7 @@ class FireBaseDataBase(BaseDatabase):
         }
 
     def create_report_to_db(self, converted_report):
-        self.push_firebase(**converted_report)
+        return self.push_firebase(**converted_report)
 
     def push_firebase(self, color: str, location: ReportLocation, state: str, title: str, subtitle: str, time: float, weather: str):
         payload = {
@@ -64,4 +64,6 @@ class FireBaseDataBase(BaseDatabase):
         """
         saving dict object to firebase with (path, payload)
         """
+        # TODO delete me
+        return 1
         self.client.push(path='/reports', data=payload)

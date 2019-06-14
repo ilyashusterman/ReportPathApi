@@ -3,7 +3,7 @@ from abc import abstractmethod
 
 class BaseDatabase(object):
 
-    def create_report(self, report):
+    def convert_and_create_report(self, report):
         """
         creates validated report to db # throws error if report is not valid
         :param report:
@@ -13,6 +13,7 @@ class BaseDatabase(object):
         converted_report = self.get_converted_report(report)
         return self.create_report_to_db(converted_report)
 
+    @abstractmethod
     def validate_report(self, report):
         """
         validate the report if the report entity requires the parameters to
@@ -38,7 +39,7 @@ class BaseDatabase(object):
         this method must be overridden for each database implementing for creating
         report entity
         :param report: # converted_report dict
-        :return: the inserted_id for the database source
+        :return: the inserted_id # int/str for the database source row
         """
         raise NotImplementedError
 

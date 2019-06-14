@@ -1,5 +1,7 @@
 from config.settings import DEFAULT_CITY_ORIGIN
-
+from config.settings import REPORT_TYPE_ACCIDENT_CRASH
+from config.settings import REPORT_TYPE_DEFAULT
+from config.settings import DEFAULT_SUBTYPE
 
 REPORT_TEXT_CONVERSION_MAP = {
     'type': {
