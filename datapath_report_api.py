@@ -17,7 +17,7 @@ class DataPathReportApi(object):
         """
 
         :param live_report: # LiveReport
-        :return: if was removed successfully from all dependencies
+        :return: if was removed successfully from all dependencies, used for tests
         """
         pass
 
