@@ -19,9 +19,10 @@ class ReportText(object):
 class LiveReport(object):
 
     def __init__(self, sysid=None, creation_time=None, raw=None, city_origin=None):
-        self.creation_time = creation_time
         self.system_id = sysid
         self.uuid = raw['data']['uuid']
+
+        self.creation_time = creation_time
         self.date_time = raw['date_time']
 
         self.reliability = raw['data']['reliability']

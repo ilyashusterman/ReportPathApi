@@ -1,7 +1,11 @@
+from datetime import datetime
+
 from config.settings import DEFAULT_CITY_ORIGIN
 from config.settings import REPORT_TYPE_ACCIDENT_CRASH
 from config.settings import REPORT_TYPE_DEFAULT
 from config.settings import DEFAULT_SUBTYPE
+from config.settings import CREATION_TIME_FORMAT
+from config.settings import REPORT_DATE_TIME_FORMAT
 
 REPORT_TEXT_CONVERSION_MAP = {
     'type': {
@@ -16,11 +20,31 @@ REPORT_TEXT_CONVERSION_MAP = {
 
 
 def convert_live_report(live_report, city_origin=DEFAULT_CITY_ORIGIN):
+    """
+    convert : 1. report dates, 2. report texts, 3. report times
+    :param live_report:
+    :param city_origin: default city origin for different city origins
+    :return:
+    """
     live_report.location.city_origin = city_origin
-    live_report.report_text.data_type = REPORT_TEXT_CONVERSION_MAP['type'][live_report.report_text.data_type] if live_report.report_text.data_type in REPORT_TEXT_CONVERSION_MAP['type'] else REPORT_TYPE_DEFAULT
-    live_report.report_text.subtype = get_subtype(live_report)
+
+    live_report.report_text = convert_report_text(live_report.report_text)
+
+    live_report.creation_time = get_report_date_time(live_report.creation_time)
+    live_report.date_time = get_report_date_time(live_report.date_time, REPORT_DATE_TIME_FORMAT)
     return live_report
 
 
-def get_subtype(live_report):
-    return REPORT_TEXT_CONVERSION_MAP['subtype'][live_report.report_text.subtype] if live_report.report_text.data_type == REPORT_TYPE_ACCIDENT_CRASH else DEFAULT_SUBTYPE
+def convert_report_text(report_text):
+    report_text.data_type = REPORT_TEXT_CONVERSION_MAP['type'][report_text.data_type] if report_text.data_type in REPORT_TEXT_CONVERSION_MAP['type'] else REPORT_TYPE_DEFAULT
+    report_text.subtype = get_subtype(report_text)
+    return report_text
+
+
+def get_subtype(report_text):
+    return REPORT_TEXT_CONVERSION_MAP['subtype'][report_text.subtype] if report_text.data_type == REPORT_TYPE_ACCIDENT_CRASH else DEFAULT_SUBTYPE
+
+
+def get_report_date_time(creation_time, report_date_format=CREATION_TIME_FORMAT):
+    creation_datetime = datetime.strptime(creation_time, report_date_format)
+    return creation_datetime

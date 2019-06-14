@@ -12,10 +12,14 @@ def load_json_file(filename):
         return json.loads(f.read())
 
 
+def get_mock_report():
+    return load_json_file('../input.json')
+
+
 class TestDataPathReportApi(TestCase):
 
     def setUp(self):
-        self.mock_live_report = load_json_file('../input.json')
+        self.mock_live_report = get_mock_report()
         self.datapath_api_handler = DataPathReportApi()
 
     def test_create_live_report(self):

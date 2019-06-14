@@ -2,6 +2,7 @@
 # from firebase.firebase import FirebaseApplication
 
 from db.base_database import BaseDatabase
+from db.exceptions import DatabaseException
 from models.live_report import ReportLocation
 
 from config.settings import FIREBASE_URL
@@ -18,10 +19,10 @@ class FireBaseDataBase(BaseDatabase):
                              debug=False, admin=True):
         """
         initiating firebase client with parameters
-        :param secret:
-        :param email:
-        :param debug:
-        :param admin:
+        :param secret: str
+        :param email: str
+        :param debug: bool
+        :param admin: bool
         :return:
         """
         # authentication = FirebaseAuthentication(secret, email, debug, admin)
@@ -39,7 +40,7 @@ class FireBaseDataBase(BaseDatabase):
             'color': 'red' if report.report_text.subtype == 'major' else 'orange',
             'title': '{} {}'.format(report.report_text.type.title(), report.report_text.subtype.title()),
             'subtitle': report.location.street,
-            'time': '{} {}'.format(report.report_text.type.title(), report.report_text.subtype.title()),
+            'time': report.creation_time.timestamp(),
             'weather': report.report_text.weather if hasattr(report.report_text, 'weather') else DEFAULT_FIREBASE_REPORT_WEATHER,
             'state': report.report_text.state if hasattr(report.report_text, 'state') else DEFAULT_FIREBASE_REPORT_STATE,
             'location': report.location
@@ -65,5 +66,7 @@ class FireBaseDataBase(BaseDatabase):
         saving dict object to firebase with (path, payload)
         """
         # TODO delete me
-        return 1
-        self.client.push(path='/reports', data=payload)
+        try:
+            return self.client.push(path='/reports', data=payload)
+        except Exception as e:
+            raise DatabaseException(e, database_name=self.name)

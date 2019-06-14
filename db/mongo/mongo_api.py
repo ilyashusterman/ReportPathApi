@@ -20,7 +20,7 @@ class MongoDataBase(BaseDatabase):
 
     def create_report_to_db(self, converted_report):
         if self.is_connection_off():
-            raise DatabaseException('Mongo couldnt connect to client db', self.database_name)
+            raise DatabaseException('Could not connect to MongoClient ', self.database_name)
         return self.save('reports', converted_report)
 
     def is_connection_off(self):
