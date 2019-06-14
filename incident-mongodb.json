@@ -1,0 +1,45 @@
+{
+    "time" : 1506877851.0,
+    "type" : "crash",
+    "user_assigned" : null,
+    "confidence" : 1,
+    "creation_time" : ISODate("2017-10-01T17:11:03.058Z"),
+    "is_assigned" : false,
+    "source" : "waze_incident",
+    "id_in_source" : "e62fa15b-f714-3739-8b29-00244ca25d69",
+    "user_id" : "waycare-system",
+    "raw" : {
+        "date_time" : "08_10_2017 21:18:42 UTC",
+        "type" : "waze_traffic_alerts_lv",
+        "data" : {
+            "subtype" : "ACCIDENT_MINOR",
+            "reliability" : 7,
+            "pubMillis" : 1507496096059,
+            "street" : "S Rainbow Blvd",
+            "type" : "ACCIDENT",
+            "location" : {
+                "y" : 36.116153,
+                "x" : -115.242945
+            },
+            "confidence" : 1,
+            "uuid" : "e62fa15b-f714-3739-8b29-00244ca25d69",
+            "reportDescription" : ""
+        }
+    },
+    "location" : {
+        "coordinates" : [
+            -115.242945, 
+            36.116153
+        ],
+        "type" : "Point"
+    },
+    "detection" : true,
+    "last_update" : ISODate("2017-10-01T17:11:32.215Z"),
+    "incident_state" : "unconfirmed",
+    "id" : "bc09cae4-e937-5126-8317-6962bd5d3f97",
+    "reliability" : 10,
+    "subtype" : "ACCIDENT_MAJOR",
+    "is_deleted" : false,
+    "camera_feed" : null
+}
+

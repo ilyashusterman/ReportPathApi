@@ -1,0 +1,22 @@
+{
+    "sysid" : "e347a32c-e0d7-45cc-98c1-6580033063e3",
+    "creation_time" : "2017-10-08T21:18:59.313Z",
+    "raw" : {
+        "date_time" : "08_10_2017 21:18:42 UTC",
+        "type" : "waze_traffic_alerts_lv",
+        "data" : {
+            "subtype" : "ACCIDENT_MINOR",
+            "reliability" : 7,
+            "pubMillis" : 1507496096059,
+            "street" : "S Rainbow Blvd",
+            "type" : "ACCIDENT",
+            "location" : {
+                "y" : 36.116153,
+                "x" : -115.242945
+            },
+            "confidence" : 1,
+            "uuid" : "e62fa15b-f714-3739-8b29-00244ca25d69",
+            "reportDescription" : ""
+        }
+    }
+}
