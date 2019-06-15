@@ -5,7 +5,7 @@ class BaseDatabase(object):
 
     def convert_and_create_report(self, report):
         """
-        creates validated report to db # throws error if report is not valid
+        Creates validated report to db # throws error if report is not valid
         :param report:
         :return: inserted_id
         """
@@ -16,29 +16,28 @@ class BaseDatabase(object):
     @abstractmethod
     def validate_report(self, report):
         """
-        validate the report if the report entity requires the parameters to
+        Validate the report required attributes are initialized properly to
         be created in the database, throws # DatabaseException
-        :param report:
-        :return:
+        :param report: LiveReport
+        :return: bool
         """
         raise NotImplementedError
 
     @abstractmethod
     def get_converted_report(self, report):
         """
-        convert the report entity for the raw dict that require to be created
-        with its specific attributes
-        :param report: # LiveReport object
-        :return:
+        Modifies the ReportLive object for the specific DB
+        :param report: LiveReport
+        :return: LiveReport
         """
         raise NotImplementedError
 
     @abstractmethod
-    def create_report_to_db(self, converted_report):
+    def create_report_to_db(self, converted_report_dict):
         """
-        must be overridden for each database implementing for creating
-        report entity to its specific db, throws # DatabaseException
-        :param report: # converted_report dict
+        Creates the converted report dict to the database
+        throws # DatabaseException
+        :param converted_report_dict: dict
         :return: the inserted_id # int/str for the database source row
         """
         raise NotImplementedError

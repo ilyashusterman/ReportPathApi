@@ -10,14 +10,19 @@ class DataPathReportApi(object):
         self.report_creator = ReportCreate()
 
     def create_report(self, raw_live_report):
+        """
+
+        :param raw_live_report: dict
+        :return: create_response: CreateResponse, created_successfully: bool
+        """
         create_response, created_successfully = self.report_creator.convert_and_create_report(raw_live_report)
         return create_response, created_successfully
 
     def remove_report(self, live_report):
         """
 
-        :param live_report: # LiveReport
-        :return: if was removed successfully from all dependencies, used for tests
+        :param live_report: LiveReport
+        :return: was_deleted_successfully: bool
         """
         pass
 

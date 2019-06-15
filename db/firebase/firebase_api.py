@@ -3,14 +3,35 @@
 
 from db.base_database import BaseDatabase
 from db.exceptions import DatabaseException
-
+from jsonschema import validate
 
 # from config.settings import FIREBASE_URL
 from config.settings import DEFAULT_FIREBASE_SECRET
 from config.settings import DEFAULT_FIREBASE_EMAIL
 from config.settings import DEFAULT_FIREBASE_REPORT_WEATHER
 from config.settings import DEFAULT_FIREBASE_REPORT_STATE
-from models.report_location import ReportLocation
+
+
+FIREBASE_REPORT_SCHEMA = {
+    'type': 'object',
+    'properties': {
+        'color': {'type': 'string'},
+        'state': {'type': 'string'},
+        'title': {'type': 'string'},
+        'subtitle': {'type': 'string'},
+        'time': {'type': 'number'},
+        'weather': {'type': 'string'},
+        'location': {
+            'type': 'object',
+            'properties': {
+                'lat': {'type': 'number'},
+                'lng': {'type': 'number'}
+            },
+            'required': ['lat', 'lng']
+        }
+    },
+    'required': ['color', 'state', 'title', 'subtitle', 'time', 'weather']
+}
 
 
 class FireBaseDataBase(BaseDatabase):
@@ -47,28 +68,20 @@ class FireBaseDataBase(BaseDatabase):
             'time': report.creation_time.timestamp(),
             'weather': report.report_text.weather if hasattr(report.report_text, 'weather') else DEFAULT_FIREBASE_REPORT_WEATHER,
             'state': report.report_text.state if hasattr(report.report_text, 'state') else DEFAULT_FIREBASE_REPORT_STATE,
-            'location': report.location
+            'location': {
+                'lat': report.location.lat,
+                'lng': report.location.lng
+            }
         }
 
     def create_report_to_db(self, converted_report):
-        return self.save(**converted_report)
+        self.validate_payload(converted_report)
+        return self.save(converted_report)
 
-    def save(self, color: str, location: ReportLocation, state: str, title: str, subtitle: str, time: float, weather: str):
-        payload = {
-            'color': color,
-            'location': {
-                'lat': location.lat,
-                'lng': location.lng
-            },
-            'state': state,
-            'subtitle': subtitle,
-            'time': time,
-            'title': title,
-            'weather': weather
-        }
-        """
-        saving dict object to firebase with (path, payload)
-        """
+    def validate_payload(self, payload):
+        validate(instance=payload, schema=FIREBASE_REPORT_SCHEMA)
+
+    def save(self, payload: dict):
         try:
             #TODO should check update/insert - merge command for mongo
             # if exist for unique keys then should modify/update else should insert

@@ -21,10 +21,11 @@ class ReportCreate(object):
 
     def convert_and_create_report(self, live_report_dict):
         """
-        converts  each live_report object to converted_report
-        creates converted_report
-        :param live_report:
-        :return: was_created_successfully: bool
+        Loading report dict to LiveReport Object
+        Converts live_report to converted_live_report
+        Creates converted_report to db
+        :param live_report_dict:
+        :return: create_response: CreateResponse, was_created_successfully: bool
         """
         parsed_report = LiveReport.load_live_report(live_report_dict)
         converted_report = convert_live_report(parsed_report)
@@ -33,9 +34,9 @@ class ReportCreate(object):
 
     def create_report_to_databases(self, live_report):
         """
-        creates the report for each database with its implementations
+        Creates the report for each database
         :param live_report:
-        :return: error_count : int for how many errors occured for counted databases
+        :return: error_count : int
         """
         errors_count = 0
         databases_response = dict()
