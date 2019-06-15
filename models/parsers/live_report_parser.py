@@ -1,4 +1,5 @@
 import logging
+import uuid
 from datetime import datetime
 
 from models.report_location import ReportLocation
@@ -6,7 +7,6 @@ from models.report_text import ReportText
 
 from config.settings import REPORT_DATE_TIME_FORMAT
 from config.settings import CREATION_TIME_FORMAT
-from config.settings import DEFAULT_REPORT_UUID
 from config.settings import DEFAULT_REPORT_RELIABILITY
 from config.settings import DEFAULT_REPORT_CONFIDENCE
 from config.settings import DEFAULT_REPORT_SYSTEM_ID
@@ -27,16 +27,17 @@ class LiveReportParser(object):
     """
     @classmethod
     def parse_live_report(cls, live_report):
-        live_report = cls.set_none_to_defaults(live_report)
+        default_report_date = cls.get_default_time()
+        live_report = cls.set_none_to_defaults(live_report, default_report_date)
         if 'data' not in live_report.raw:
             live_report.raw['data'] = dict()
             logging.info('raw attribute does not contain "data" attribute for %s sysid' % live_report.system_id)
 
-        live_report.uuid = live_report.raw['data'].get('uuid', DEFAULT_REPORT_UUID)
-        live_report.date_time = live_report.raw.get('date_time', cls.get_default_time(REPORT_DATE_TIME_FORMAT))
+        live_report.uuid = live_report.raw['data'].get('uuid', uuid.uuid4().hex)
+        live_report.date_time = live_report.raw.get('date_time', default_report_date.strftime(REPORT_DATE_TIME_FORMAT))
+        live_report.pubMillis = live_report.raw['data'].get('pubMillis', default_report_date.timestamp())
 
         live_report.reliability = live_report.raw['data'].get('reliability', DEFAULT_REPORT_RELIABILITY)
-        live_report.pubMillis = live_report.raw['data'].get('pubMillis', DEFAULT_REPORT_RELIABILITY)
         live_report.confidence = live_report.raw['data'].get('confidence', DEFAULT_REPORT_CONFIDENCE)
 
         live_report = cls.parse_report_text(live_report)
@@ -45,15 +46,15 @@ class LiveReportParser(object):
         return live_report
 
     @classmethod
-    def set_none_to_defaults(cls, live_report):
-        live_report.raw = dict() if live_report.raw is None else live_report.raw
-        live_report.creation_time = live_report.creation_time if live_report.creation_time is not None else cls.get_default_time(CREATION_TIME_FORMAT)
-        live_report.system_id = live_report.system_id if live_report.system_id is not None else DEFAULT_REPORT_SYSTEM_ID
-        return live_report
+    def get_default_time(cls):
+        return datetime.utcnow()
 
     @classmethod
-    def get_default_time(cls, date_format):
-        return datetime.now().strftime(date_format)
+    def set_none_to_defaults(cls, live_report, default_report_date=datetime.utcnow()):
+        live_report.raw = dict() if live_report.raw is None else live_report.raw
+        live_report.creation_time = live_report.creation_time if live_report.creation_time is not None else default_report_date.strftime(CREATION_TIME_FORMAT)
+        live_report.system_id = live_report.system_id if live_report.system_id is not None else DEFAULT_REPORT_SYSTEM_ID
+        return live_report
 
     @classmethod
     def parse_report_text(cls, live_report):

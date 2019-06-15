@@ -1,6 +1,16 @@
-import json
+
 from unittest import TestCase
 
+from config.settings import DEFAULT_REPORT_SYSTEM_ID
+from config.settings import DEFAULT_REPORT_DESCRIPTION
+from config.settings import DEFAULT_REPORT_LOCATION_DICT
+from config.settings import DEFAULT_REPORT_CONFIDENCE
+from config.settings import DEFAULT_REPORT_DATA_TYPE
+from config.settings import REPORT_DEFAULT_STREET
+from config.settings import DEFAULT_REPORT_RELIABILITY
+from config.settings import DEFAULT_REPORT_SUB_TYPE
+from config.settings import DEFAULT_REPORT_TYPE
+from config.settings import DEFAULT_REPORT_SYSTEM_ID
 from models.live_report import LiveReport
 from models.parsers.live_report_parser import LiveReportParser
 from tests.test_datapath_report_api import get_mock_report
@@ -39,26 +49,24 @@ class TestLiveReportParser(TestCase):
 
     def test_empty_live_report_to_defaults(self):
         live_report = LiveReport()
+
         live_report_parsed = LiveReportParser.parse_live_report(live_report)
         report_dict_check = {
-          'sysid': '',
+          'sysid': DEFAULT_REPORT_SYSTEM_ID,
           'creation_time': '2019-06-15T17:21:58.166Z',
           'raw': {
             'date_time': '15_06_2019 17:21:58 ',
-            'type': '',
+            'type': DEFAULT_REPORT_TYPE,
             'data': {
-              'subtype': '',
-              'reliability': '',
+              'subtype': DEFAULT_REPORT_SUB_TYPE,
+              'reliability': DEFAULT_REPORT_RELIABILITY,
               'pubMillis': '',
-              'street': '',
-              'type': '',
-              'location': {
-                'y': 1,
-                'x': 1
-              },
-              'confidence': '',
+              'street': REPORT_DEFAULT_STREET,
+              'type': DEFAULT_REPORT_DATA_TYPE,
+              'location': DEFAULT_REPORT_LOCATION_DICT,
+              'confidence': DEFAULT_REPORT_CONFIDENCE,
               'uuid': '',
-              'reportDescription': ''
+              'reportDescription': DEFAULT_REPORT_DESCRIPTION
             }
           }
         }
@@ -66,7 +74,14 @@ class TestLiveReportParser(TestCase):
         """delete defaults dates do to mili seconds difference"""
         del report_dict_check['creation_time']
         del report_live_dict_parsed['creation_time']
+
         del report_dict_check['raw']['date_time']
         del report_live_dict_parsed['raw']['date_time']
+
+        del report_live_dict_parsed['raw']['data']['uuid']
+        del report_dict_check['raw']['data']['uuid']
+
+        del report_live_dict_parsed['raw']['data']['pubMillis']
+        del report_dict_check['raw']['data']['pubMillis']
 
         self.assertEqual(report_dict_check, report_live_dict_parsed)

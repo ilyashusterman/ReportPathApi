@@ -3,10 +3,11 @@ from collections import namedtuple
 
 from models.live_report import LiveReport
 from converters.live_report_converter import convert_live_report
-from db.exceptions import DatabaseException
-
 from reports.report_firebase import ReportFireBaseImpl
 from reports.report_mongo import ReportMongoImpl
+
+from db.exceptions import DatabaseException
+
 
 from config.settings import MAX_DATABASE_CREATION_ERRORS
 from config.settings import NO_ERRORS_OCCURRED
@@ -15,7 +16,7 @@ from config.settings import NO_ERRORS_OCCURRED
 CreateResponse = namedtuple('CreateResponse', ['errors_count', 'databases', 'failed_databases'])
 
 
-def get_report_databases():
+def get_report_db_implementations():
     return [ReportMongoImpl(), ReportFireBaseImpl()]
 
 
@@ -47,7 +48,7 @@ class ReportCreate(object):
         errors_count = 0
         databases_response = dict()
         failed_databases = list()
-        for report_db_impl in get_report_databases():
+        for report_db_impl in get_report_db_implementations():
             try:
                 inserted_id = report_db_impl.convert_and_create_report(live_report)
                 logging.info('Created %s for db %s Successfully' % (inserted_id, report_db_impl.name))
