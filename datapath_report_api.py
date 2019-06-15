@@ -15,7 +15,7 @@ class DataPathReportApi(object):
         :param raw_live_report: dict
         :return: create_response: CreateResponse, created_successfully: bool
         """
-        create_response, created_successfully = self.report_creator.convert_and_create_report(raw_live_report)
+        create_response, created_successfully = self.report_creator.convert_and_create_one_report(raw_live_report)
         return create_response, created_successfully
 
     def remove_report(self, live_report):
