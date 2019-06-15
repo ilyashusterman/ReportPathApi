@@ -1,19 +1,5 @@
-class ReportLocation(object):
-
-    def __init__(self, lat, lng, street, city_origin):
-        self.lat = lat
-        self.lng = lng
-        self.street = street
-        self.city_origin = city_origin
-
-
-class ReportText(object):
-
-    def __init__(self, type, description, data_type, subtype):
-        self.type = type
-        self.description = description
-        self.data_type = data_type
-        self.subtype = subtype
+from models.report_location import ReportLocation
+from models.report_text import ReportText
 
 
 class LiveReport(object):
