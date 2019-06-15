@@ -6,8 +6,6 @@ from converters.live_report_converter import convert_live_report
 from reports.report_firebase import ReportFireBaseImpl
 from reports.report_mongo import ReportMongoImpl
 
-from db.exceptions import DatabaseException
-
 
 from config.settings import MAX_DATABASE_CREATION_ERRORS
 from config.settings import NO_ERRORS_OCCURRED
@@ -53,9 +51,9 @@ class ReportCreate(object):
                 inserted_id = report_db_impl.convert_and_create_report(live_report)
                 logging.info('Created %s for db %s Successfully' % (inserted_id, report_db_impl.name))
                 databases_response[report_db_impl.name] = inserted_id
-            except DatabaseException as e:
+            except Exception as e:
                 errors_count += 1
-                logging.error('Could not save to %s database error:%s report \n %s' % (report_db_impl.name, e, live_report.to_dict()))
+                logging.error('Could not save to %s error:%s report \n %s' % (report_db_impl.name, e, live_report.to_dict()))
                 failed_databases.append(report_db_impl.name)
                 if errors_count > self.max_creation_errors:
                     break

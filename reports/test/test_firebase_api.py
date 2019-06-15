@@ -18,7 +18,9 @@ class TestFireBaseDataBase(TestDatabaseTestCase):
         self.assertIsInstance(converted_report_firebase['time'], float)
 
     def test_validate_report(self):
-        self.assertTrue(self.firebase_db.validate_report(self.converted_report))
+        converted_report_firebase = self.firebase_db.get_converted_report(
+            self.converted_report)
+        self.assertTrue(self.firebase_db.validate_report(converted_report_firebase))
 
     def test_create_report_to_db(self):
         """

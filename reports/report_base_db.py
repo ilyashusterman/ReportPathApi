@@ -11,12 +11,12 @@ class BaseReportDatabase(BasicDB):
         :param report:
         :return: inserted_id
         """
-        self.validate_report(report)
         converted_report = self.get_converted_report(report)
+        self.validate_report(converted_report)
         return self.create_report_to_db(converted_report)
 
     @abstractmethod
-    def validate_report(self, report):
+    def validate_report(self, converted_report):
         """
         Validate the report required attributes are initialized properly to
         be created in the database, throws # DatabaseException

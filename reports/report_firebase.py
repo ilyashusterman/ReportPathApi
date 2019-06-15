@@ -1,6 +1,6 @@
-from jsonschema import validate
+from jsonschema import validate, ValidationError
 
-
+from reports.exceptions import ReportValidationException
 from reports.report_base_db import BaseReportDatabase
 from db.firebase.firebase_db import FireBaseDB
 
@@ -34,10 +34,22 @@ class ReportFireBaseImpl(BaseReportDatabase):
     def __init__(self):
         self.db = FireBaseDB()
 
-    def validate_report(self, report):
-        #TODO
-        #  no input validation needed for now
+    def validate_report(self, converted_report):
+        self.validate_payload(converted_report)
         return True
+
+    def validate_payload(self, payload):
+        """
+        Validating payload with json schema more information at
+        https://json-schema.org/understanding-json-schema/
+        raises ReportValidationException
+        :param payload: dict
+        :return: None
+        """
+        try:
+            validate(instance=payload, schema=FIREBASE_REPORT_SCHEMA)
+        except ValidationError as e:
+            raise ReportValidationException(e)
 
     def get_converted_report(self, report):
         return {
@@ -54,14 +66,4 @@ class ReportFireBaseImpl(BaseReportDatabase):
         }
 
     def create_report_to_db(self, converted_report):
-        self.validate_payload(converted_report)
         return self.db.save('reports', converted_report)
-
-    def validate_payload(self, payload):
-        """
-        Validating payload with json schema more information at
-        https://json-schema.org/understanding-json-schema/
-        :param payload: dict
-        :return:
-        """
-        validate(instance=payload, schema=FIREBASE_REPORT_SCHEMA)
