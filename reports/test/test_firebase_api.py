@@ -1,4 +1,4 @@
-from db.test.DatabaseTestCase import TestDatabaseTestCase
+from reports.test.database_test_case import TestDatabaseTestCase
 from reports.report_firebase import ReportFireBaseImpl
 from db.exceptions import DatabaseException
 

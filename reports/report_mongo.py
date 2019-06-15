@@ -1,5 +1,5 @@
-from db.base_database import BaseReportDatabase
 from db.mongo.mongodb_base import MongoDBBase
+from reports.report_base_db import BaseReportDatabase
 
 
 class ReportMongoImpl(BaseReportDatabase):

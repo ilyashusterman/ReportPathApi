@@ -1,6 +1,7 @@
 from jsonschema import validate
 
-from db.base_database import BaseReportDatabase
+
+from reports.report_base_db import BaseReportDatabase
 from db.firebase.firebase_db import FireBaseDB
 
 from config.settings import DEFAULT_FIREBASE_REPORT_WEATHER
