@@ -7,7 +7,7 @@ class BasicDB(object):
     def name(self):
         """
 
-        :return: name representation for the class implementing
+        :return: str
         """
         return self.__class__.__name__
 
