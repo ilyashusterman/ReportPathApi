@@ -1,4 +1,4 @@
-##Usage
+# Usage
 
 #### commands:
 
@@ -7,6 +7,7 @@
 * install python packages `pip install -r requirements.txt`
 * set databases connections properly ( install mongod from https://docs.mongodb.com/manual/mongo/ firebase setup https://firebase.google.com/docs/admin/setup/ (python firebase-admin))
 * run main `make run`
+---
 
 Documentation:
 ---
