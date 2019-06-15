@@ -27,7 +27,7 @@ class LiveReport(object):
         parsed_live_report = LiveReportParser.parse_live_report(report_live)
         return parsed_live_report
 
-    def to_json_string(self):
+    def to_dict(self):
         return {
             'sysid': self.system_id,
             'creation_time': self.creation_time,

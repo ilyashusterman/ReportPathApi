@@ -20,7 +20,7 @@ class MongoDataBase(BaseDatabase):
         return True
 
     def get_converted_report(self, report):
-        return report.to_json_string()
+        return report.to_dict()
 
     def create_report_to_db(self, converted_report):
         if self.is_connection_off():

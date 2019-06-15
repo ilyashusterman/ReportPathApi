@@ -47,7 +47,7 @@ class ReportCreate(object):
                 databases_response[database_api.name] = inserted_id
             except DatabaseException as e:
                 errors_count += 1
-                logging.error('Could not save to %s database error:%s report \n %s' % (database_api.name, e, live_report.to_json_string()))
+                logging.error('Could not save to %s database error:%s report \n %s' % (database_api.name, e, live_report.to_dict()))
                 failed_databases.append(database_api.name)
                 if errors_count > self.max_creation_errors:
                     break

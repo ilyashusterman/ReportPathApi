@@ -20,4 +20,4 @@ class TestMongoDataBase(TestDatabaseTestCase):
 
     def test_get_converted_report(self):
         converted_report_mongo = self.mongo_db.get_converted_report(self.converted_report)
-        self.assertSequenceEqual(converted_report_mongo.keys(), self.converted_report.to_json_string().keys())
+        self.assertSequenceEqual(converted_report_mongo.keys(), self.converted_report.to_dict().keys())
