@@ -57,4 +57,10 @@ class ReportFireBaseImpl(BaseReportDatabase):
         return self.db.save('reports', converted_report)
 
     def validate_payload(self, payload):
+        """
+        Validating payload with json schema more information at
+        https://json-schema.org/understanding-json-schema/
+        :param payload: dict
+        :return:
+        """
         validate(instance=payload, schema=FIREBASE_REPORT_SCHEMA)
