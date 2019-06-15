@@ -50,9 +50,9 @@ class FireBaseDataBase(BaseDatabase):
         }
 
     def create_report_to_db(self, converted_report):
-        return self.push_firebase(**converted_report)
+        return self.save(**converted_report)
 
-    def push_firebase(self, color: str, location: ReportLocation, state: str, title: str, subtitle: str, time: float, weather: str):
+    def save(self, color: str, location: ReportLocation, state: str, title: str, subtitle: str, time: float, weather: str):
         payload = {
             'color': color,
             'location': {
@@ -69,6 +69,8 @@ class FireBaseDataBase(BaseDatabase):
         saving dict object to firebase with (path, payload)
         """
         try:
+            #TODO should check update/insert - merge command for mongo
+            # if exist for unique keys then should modify/update else should insert
             return self.client.push(path='/reports', data=payload)
         except Exception as e:
             raise DatabaseException(e, database_name=self.name)

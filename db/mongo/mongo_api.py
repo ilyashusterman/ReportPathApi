@@ -28,5 +28,7 @@ class MongoDataBase(BaseDatabase):
         return True
 
     def save(self, table_name, dict_entity):
+        #TODO should check update/insert - merge command for mongo
+        # if exist for unique keys then should modify/update else should insert
         table = self.db[table_name]
         return table.insert(dict_entity).inserted_id
