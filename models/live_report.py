@@ -11,6 +11,7 @@ class LiveReport(object):
 
         self.creation_time = creation_time
         self.date_time = None
+        self.timestamp = None
 
         self.reliability = None
         self.pubMillis = None

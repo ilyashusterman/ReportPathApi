@@ -29,13 +29,20 @@ def convert_live_report(live_report, city_origin=DEFAULT_CITY_ORIGIN):
     :param city_origin: str
     :return: LiveReport with converted and fixed attributes
     """
-    live_report.location.city_origin = city_origin
+    live_report.creation_time = get_report_date_time(live_report.creation_time)
+    live_report.date_time = get_report_date_time(live_report.date_time, REPORT_DATE_TIME_FORMAT)
+    live_report.timestamp = live_report.date_time.second
 
     live_report.report_text = convert_report_text(live_report.report_text)
 
-    live_report.creation_time = get_report_date_time(live_report.creation_time)
-    live_report.date_time = get_report_date_time(live_report.date_time, REPORT_DATE_TIME_FORMAT)
+    live_report.location.city_origin = city_origin
+
     return live_report
+
+
+def get_report_date_time(creation_time, report_date_format=CREATION_TIME_FORMAT):
+    creation_datetime = datetime.strptime(creation_time, report_date_format)
+    return creation_datetime
 
 
 def convert_report_text(report_text):
@@ -46,8 +53,3 @@ def convert_report_text(report_text):
 
 def get_subtype(report_text):
     return REPORT_TEXT_CONVERSION_MAP['subtype'][report_text.subtype] if report_text.data_type == REPORT_TYPE_ACCIDENT_CRASH else DEFAULT_SUBTYPE
-
-
-def get_report_date_time(creation_time, report_date_format=CREATION_TIME_FORMAT):
-    creation_datetime = datetime.strptime(creation_time, report_date_format)
-    return creation_datetime
