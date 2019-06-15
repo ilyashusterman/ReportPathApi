@@ -1,5 +1,5 @@
 ################################################################################
-# Makefile for datapath api persist report entity copyrighted
+# Makefile for datapath api persist report
 ################################################################################
 
 # Prefer bash shell
