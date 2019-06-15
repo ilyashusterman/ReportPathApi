@@ -15,8 +15,9 @@ CreateResponse = namedtuple('CreateResponse', ['errors_count', 'databases', 'fai
 
 class ReportCreate(object):
 
-    def __init__(self, max_creations_errors=MAX_DATABASE_CREATION_ERRORS):
+    def __init__(self, max_creations_errors=MAX_DATABASE_CREATION_ERRORS, no_errors_occurred=NO_ERRORS_OCCURRED):
         self.max_creation_errors = max_creations_errors
+        self.no_errors_occurred = no_errors_occurred
 
     def convert_and_create_report(self, live_report_dict):
         """
@@ -28,7 +29,7 @@ class ReportCreate(object):
         parsed_report = LiveReport.load_live_report(live_report_dict)
         converted_report = convert_live_report(parsed_report)
         create_response = self.create_report_to_databases(converted_report)
-        return create_response, create_response.errors_count == NO_ERRORS_OCCURRED
+        return create_response, create_response.errors_count == self.no_errors_occurred
 
     def create_report_to_databases(self, live_report):
         """

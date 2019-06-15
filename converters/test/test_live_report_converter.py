@@ -3,8 +3,8 @@ import json
 from unittest import TestCase
 
 
-from converters.live_report_converter import convert_live_report
 from models.live_report import LiveReport
+from converters.live_report_converter import convert_live_report
 
 TEST_PATH = os.path.relpath(os.path.join(os.path.dirname(__file__), ''))
 

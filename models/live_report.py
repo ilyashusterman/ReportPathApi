@@ -6,28 +6,45 @@ class LiveReport(object):
 
     def __init__(self, sysid=None, creation_time=None, raw=None, city_origin=None):
         self.system_id = sysid
-        self.uuid = raw['data']['uuid']
+        self.raw = dict() if raw is None else raw
+
+        self.uuid = None
 
         self.creation_time = creation_time
-        self.date_time = raw['date_time']
+        self.date_time = None
 
-        self.reliability = raw['data']['reliability']
-        self.pubMillis = raw['data']['pubMillis']
-        self.confidence = raw['data']['confidence']
+        self.reliability = None
+        self.pubMillis = None
+        self.confidence = None
 
-        self.report_text = ReportText(type=raw['type'],
-                                      description=raw['data']['reportDescription'],
-                                      data_type=raw['data']['type'],
-                                      subtype=raw['data']['subtype'])
+        self.report_text = None
 
-        self.location = ReportLocation(lat=raw['data']['location']['x'],
-                                       lng=raw['data']['location']['y'],
-                                       street=raw['data']['street'],
-                                       city_origin=city_origin)
+        self.raw['city_origin'] = city_origin
+        self.location = None
+
+    def parse_raw(self):
+        self.uuid = self.raw['data']['uuid']
+        self.date_time = self.raw['date_time']
+
+        self.reliability = self.raw['data']['reliability']
+        self.pubMillis = self.raw['data']['pubMillis']
+        self.confidence = self.raw['data']['confidence']
+
+        self.report_text = ReportText(type=self.raw['type'],
+                                      description=self.raw['data']['reportDescription'],
+                                      data_type=self.raw['data']['type'],
+                                      subtype=self.raw['data']['subtype'])
+
+        self.location = ReportLocation(lat=self.raw['data']['location']['x'],
+                                       lng=self.raw['data']['location']['y'],
+                                       street=self.raw['data']['street'],
+                                       city_origin=self.raw['city_origin'])
 
     @classmethod
     def load_live_report(cls, raw_report_dict):
-        return cls(**raw_report_dict)
+        report_live = cls(**raw_report_dict)
+        report_live.parse_raw()
+        return report_live
 
     def to_json_string(self):
         return {
