@@ -36,8 +36,8 @@ class BaseDatabase(object):
     @abstractmethod
     def create_report_to_db(self, converted_report):
         """
-        this method must be overridden for each database implementing for creating
-        report entity
+        must be overridden for each database implementing for creating
+        report entity to its specific db, throws # DatabaseException
         :param report: # converted_report dict
         :return: the inserted_id # int/str for the database source row
         """
@@ -47,6 +47,6 @@ class BaseDatabase(object):
     def name(self):
         """
 
-        :return: name representation for the class
+        :return: name representation for the class implementing
         """
         return self.__class__.__name__

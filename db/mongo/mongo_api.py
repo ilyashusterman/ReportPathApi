@@ -24,7 +24,7 @@ class MongoDataBase(BaseDatabase):
         return self.save('reports', converted_report)
 
     def is_connection_off(self):
-        #TODO should check if mongo db connection is working or not
+        # TODO should check if mongo db connection is working or not
         return True
 
     def save(self, table_name, dict_entity):

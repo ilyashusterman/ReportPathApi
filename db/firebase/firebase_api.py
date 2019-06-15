@@ -5,7 +5,7 @@ from db.base_database import BaseDatabase
 from db.exceptions import DatabaseException
 from models.live_report import ReportLocation
 
-from config.settings import FIREBASE_URL
+# from config.settings import FIREBASE_URL
 from config.settings import DEFAULT_FIREBASE_SECRET
 from config.settings import DEFAULT_FIREBASE_EMAIL
 from config.settings import DEFAULT_FIREBASE_REPORT_WEATHER
@@ -25,6 +25,7 @@ class FireBaseDataBase(BaseDatabase):
         :param admin: bool
         :return:
         """
+        # TODO finish implementing firebase with remote testing
         # authentication = FirebaseAuthentication(secret, email, debug, admin)
         # return FirebaseApplication(FIREBASE_URL, authentication)
         return dict()
@@ -33,6 +34,8 @@ class FireBaseDataBase(BaseDatabase):
         self.client = self.init_firebase_client(secret, email, debug, admin)
 
     def validate_report(self, report):
+        #TODO
+        #  no input validation needed for now
         return True
 
     def get_converted_report(self, report):
@@ -65,7 +68,6 @@ class FireBaseDataBase(BaseDatabase):
         """
         saving dict object to firebase with (path, payload)
         """
-        # TODO delete me
         try:
             return self.client.push(path='/reports', data=payload)
         except Exception as e:
