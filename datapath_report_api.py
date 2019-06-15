@@ -9,7 +9,7 @@ class DataPathReportApi(object):
     def __init__(self):
         self.report_creator = ReportCreate()
 
-    def create_single_report(self, raw_live_report):
+    def create_one_report(self, raw_live_report):
         """
 
         :param raw_live_report: dict
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         live_report_raw = json.load(json_data)
         # logging.info('Raw Report \n %s' % json.dumps(live_report_raw, indent=2))
         datapath_api_handler = DataPathReportApi()
-        create_response, did_created_successfully = datapath_api_handler.create_single_report(live_report_raw)
+        create_response, did_created_successfully = datapath_api_handler.create_one_report(live_report_raw)
         logging.info('create_response %s' % create_response._asdict())
         logging.info('Was created successfully=%s' % did_created_successfully)
 

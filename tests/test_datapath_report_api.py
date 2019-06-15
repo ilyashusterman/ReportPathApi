@@ -23,7 +23,7 @@ class TestDataPathReportApi(TestCase):
         self.datapath_api_handler = DataPathReportApi()
 
     def test_create_report(self):
-        create_response, did_created_successfully = self.datapath_api_handler.create_single_report(self.mock_live_report)
+        create_response, did_created_successfully = self.datapath_api_handler.create_one_report(self.mock_live_report)
         # TODO in the mean time the test checks whether the creation was done successfully via databases dependencies
         # TODO fix to self.assertTrue(did_created_successfully) when database initialize done successfully
         self.assertFalse(did_created_successfully)
