@@ -8,6 +8,10 @@ class ReportMongoImpl(BaseReportDatabase):
         self.db = MongoDBBase()
 
     def validate_report(self, report):
+        #TODO clarify more columns and constraints:
+        # 1.important fields to validate if exist
+        # 2.unique constraints for: system_id, uuid
+        # 3.raw data model how dynamic is it?
         return True
 
     def get_converted_report(self, report):
