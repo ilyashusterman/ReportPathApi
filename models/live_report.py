@@ -4,6 +4,11 @@ from models.parsers.live_report_parser import LiveReportParser
 class LiveReport(object):
 
     def __init__(self, sysid=None, creation_time=None, raw=None, city_origin=None):
+        #TODO clarify how dynamic LiveReport attributes could change:
+        # 1.how many are minimal attributes? what should we expect
+        # 2.more case scenarios of live_reports (need to make more json inputs)
+        # if the class more dynamic then it should instance of Bunch or dynamic namedtuple for example
+        # and other logic for Parse its attributes
         self.system_id = sysid
         self.raw = raw
 
