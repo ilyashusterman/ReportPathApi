@@ -1,7 +1,31 @@
 from abc import abstractmethod
 
 
-class BaseDatabase(object):
+class BasicDB(object):
+
+    @property
+    def name(self):
+        """
+
+        :return: name representation for the class implementing
+        """
+        return self.__class__.__name__
+
+
+class BaseDatabase(BasicDB):
+
+    @abstractmethod
+    def save(self, table_name: str, dict_payload: dict):
+        """
+        save payload dict to table name
+        :param table_name: str
+        :param dict_payload: dict
+        :return: inserted_id
+        """
+        raise NotImplementedError
+
+
+class BaseReportDatabase(BasicDB):
 
     def convert_and_create_report(self, report):
         """
@@ -41,11 +65,3 @@ class BaseDatabase(object):
         :return: the inserted_id # int/str for the database source row
         """
         raise NotImplementedError
-
-    @property
-    def name(self):
-        """
-
-        :return: name representation for the class implementing
-        """
-        return self.__class__.__name__

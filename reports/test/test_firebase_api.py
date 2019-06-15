@@ -1,5 +1,5 @@
 from db.test.DatabaseTestCase import TestDatabaseTestCase
-from db.firebase.firebase_api import FireBaseDataBase
+from reports.report_firebase import ReportFireBaseImpl
 from db.exceptions import DatabaseException
 
 
@@ -7,7 +7,7 @@ class TestFireBaseDataBase(TestDatabaseTestCase):
 
     def setUp(self):
         super(TestFireBaseDataBase, self).setUp()
-        self.firebase_db = FireBaseDataBase()
+        self.firebase_db = ReportFireBaseImpl()
 
     def test_get_converted_report(self):
         converted_report_firebase = self.firebase_db.get_converted_report(self.converted_report)

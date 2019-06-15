@@ -1,4 +1,4 @@
-from db.mongo.mongo_api import MongoDataBase
+from reports.report_mongo import ReportMongoImpl
 from db.test.DatabaseTestCase import TestDatabaseTestCase
 
 
@@ -6,7 +6,7 @@ class TestMongoDataBase(TestDatabaseTestCase):
 
     def setUp(self):
         super(TestMongoDataBase, self).setUp()
-        self.mongo_db = MongoDataBase()
+        self.mongo_db = ReportMongoImpl()
 
     def test_validate_report(self):
         self.assertTrue(self.mongo_db.validate_report(self.converted_report))
@@ -16,7 +16,7 @@ class TestMongoDataBase(TestDatabaseTestCase):
         for now the database for test environment shoudl be off
         :return:
         """
-        self.assertTrue(self.mongo_db.is_connection_off())
+        self.assertTrue(self.mongo_db.db.is_connection_off())
 
     def test_get_converted_report(self):
         converted_report_mongo = self.mongo_db.get_converted_report(self.converted_report)
