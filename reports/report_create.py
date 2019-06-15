@@ -6,7 +6,7 @@ from db.exceptions import DatabaseException
 
 from config.settings import MAX_DATABASE_CREATION_ERRORS
 from config.settings import NO_ERRORS_OCCURRED
-from db.config import DATABASES_API
+from db.config import get_databases
 from models.live_report import LiveReport
 
 
@@ -39,7 +39,7 @@ class ReportCreate(object):
         errors_count = 0
         databases_response = dict()
         failed_databases = list()
-        for database_api in DATABASES_API:
+        for database_api in get_databases():
             try:
                 inserted_id = database_api.convert_and_create_report(live_report)
                 logging.info('Created %s for db %s Successfully' % (inserted_id, database_api.name))
