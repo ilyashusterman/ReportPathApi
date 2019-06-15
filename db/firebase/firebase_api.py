@@ -3,13 +3,14 @@
 
 from db.base_database import BaseDatabase
 from db.exceptions import DatabaseException
-from models.live_report import ReportLocation
+
 
 # from config.settings import FIREBASE_URL
 from config.settings import DEFAULT_FIREBASE_SECRET
 from config.settings import DEFAULT_FIREBASE_EMAIL
 from config.settings import DEFAULT_FIREBASE_REPORT_WEATHER
 from config.settings import DEFAULT_FIREBASE_REPORT_STATE
+from models.report_location import ReportLocation
 
 
 class FireBaseDataBase(BaseDatabase):

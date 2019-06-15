@@ -3,10 +3,14 @@ from pymongo import MongoClient
 from db.base_database import BaseDatabase
 from db.exceptions import DatabaseException
 
+from config.settings import MONGODB_HOST
+from config.settings import MONGODB_PORT
+from config.settings import MONGODB_NAME
+
 
 class MongoDataBase(BaseDatabase):
 
-    def __init__(self, host='localhost', port=27017, database_name='test_database'):
+    def __init__(self, host=MONGODB_HOST, port=MONGODB_PORT, database_name=MONGODB_NAME):
         self.client = MongoClient(host=host, port=port, connect=False)
         self.connection_working = self.client is not None
         self.database_name = database_name

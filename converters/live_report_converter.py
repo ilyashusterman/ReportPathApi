@@ -21,7 +21,7 @@ REPORT_TEXT_CONVERSION_MAP = {
 
 def convert_live_report(live_report, city_origin=DEFAULT_CITY_ORIGIN):
     """
-    convert : 1. report dates, 2. report texts, 3. report times
+    convert : 1. report dates_times, 2. report texts, 3. report times
     :param live_report:
     :param city_origin: default city origin for different city origins
     :return: live_report # LiveReport with converted and fixed attributes

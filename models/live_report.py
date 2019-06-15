@@ -1,12 +1,11 @@
-from models.report_location import ReportLocation
-from models.report_text import ReportText
+from models.parsers.live_report_parser import LiveReportParser
 
 
 class LiveReport(object):
 
     def __init__(self, sysid=None, creation_time=None, raw=None, city_origin=None):
         self.system_id = sysid
-        self.raw = dict() if raw is None else raw
+        self.raw = raw
 
         self.uuid = None
 
@@ -17,34 +16,16 @@ class LiveReport(object):
         self.pubMillis = None
         self.confidence = None
 
-        self.report_text = None
+        self.report_text = None  # :type : ReportText
 
-        self.raw['city_origin'] = city_origin
-        self.location = None
-
-    def parse_raw(self):
-        self.uuid = self.raw['data']['uuid']
-        self.date_time = self.raw['date_time']
-
-        self.reliability = self.raw['data']['reliability']
-        self.pubMillis = self.raw['data']['pubMillis']
-        self.confidence = self.raw['data']['confidence']
-
-        self.report_text = ReportText(type=self.raw['type'],
-                                      description=self.raw['data']['reportDescription'],
-                                      data_type=self.raw['data']['type'],
-                                      subtype=self.raw['data']['subtype'])
-
-        self.location = ReportLocation(lat=self.raw['data']['location']['x'],
-                                       lng=self.raw['data']['location']['y'],
-                                       street=self.raw['data']['street'],
-                                       city_origin=self.raw['city_origin'])
+        self.city_origin = city_origin
+        self.location = None  # :type : ReportLocation
 
     @classmethod
     def load_live_report(cls, raw_report_dict):
         report_live = cls(**raw_report_dict)
-        report_live.parse_raw()
-        return report_live
+        parsed_live_report = LiveReportParser.parse_live_report(report_live)
+        return parsed_live_report
 
     def to_json_string(self):
         return {
