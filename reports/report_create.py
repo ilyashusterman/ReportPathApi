@@ -1,13 +1,13 @@
 import logging
 from collections import namedtuple
 
+from models.live_report import LiveReport
 from converters.live_report_converter import convert_live_report
 from db.exceptions import DatabaseException
 
+from db.config import get_databases
 from config.settings import MAX_DATABASE_CREATION_ERRORS
 from config.settings import NO_ERRORS_OCCURRED
-from db.config import get_databases
-from models.live_report import LiveReport
 
 
 CreateResponse = namedtuple('CreateResponse', ['errors_count', 'databases', 'failed_databases'])
