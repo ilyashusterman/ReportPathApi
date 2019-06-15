@@ -54,7 +54,7 @@ class ReportFireBaseImpl(BaseReportDatabase):
     def get_converted_report(self, report):
         return {
             'color': 'red' if report.report_text.subtype == 'major' else 'orange',
-            'title': '{} {}'.format(report.report_text.type.title(), report.report_text.subtype.title()),
+            'title': '%s %s' % (report.report_text.type.title(), report.report_text.subtype.title()),
             'subtitle': report.location.street,
             'time': report.creation_time.timestamp(),
             'weather': report.report_text.weather if hasattr(report.report_text, 'weather') else DEFAULT_FIREBASE_REPORT_WEATHER,

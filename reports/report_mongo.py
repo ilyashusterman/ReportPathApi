@@ -1,5 +1,3 @@
-from jsonschema import validate, ValidationError
-
 from db.mongo.mongodb_base import MongoDBBase
 from reports.report_base_db import BaseReportDatabase
 
