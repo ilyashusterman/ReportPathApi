@@ -13,9 +13,9 @@ class BaseReportDatabase(BasicDB):
         :param report:
         :return: inserted_id
         """
-        converted_report = self.get_converted_report(report)
+        converted_report = self.convert_report(report)
         self.validate_report(converted_report)
-        return self.create_report_to_db(converted_report)
+        return self.create_db_report(converted_report)
 
     @abstractmethod
     def validate_report(self, converted_report):
@@ -28,7 +28,7 @@ class BaseReportDatabase(BasicDB):
         raise NotImplementedError
 
     @abstractmethod
-    def get_converted_report(self, report):
+    def convert_report(self, report):
         """
         Modifies the ReportLive object for the specific DB
         :param report: LiveReport
@@ -37,7 +37,7 @@ class BaseReportDatabase(BasicDB):
         raise NotImplementedError
 
     @abstractmethod
-    def create_report_to_db(self, converted_report_dict):
+    def create_db_report(self, converted_report_dict):
         """
         Creates the converted report dict to the database
         throws # DatabaseException

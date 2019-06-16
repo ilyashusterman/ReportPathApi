@@ -51,7 +51,7 @@ class ReportFireBaseImpl(BaseReportDatabase):
         except ValidationError as e:
             raise ReportValidationException(e)
 
-    def get_converted_report(self, report):
+    def convert_report(self, report):
         return {
             'color': 'red' if report.report_text.subtype == 'major' else 'orange',
             'title': '%s %s' % (report.report_text.type.title(), report.report_text.subtype.title()),
@@ -65,5 +65,5 @@ class ReportFireBaseImpl(BaseReportDatabase):
             }
         }
 
-    def create_report_to_db(self, converted_report):
+    def create_db_report(self, converted_report):
         return self.db_session.save('reports', converted_report)

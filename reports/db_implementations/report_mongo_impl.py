@@ -43,8 +43,8 @@ class ReportMongoImpl(BaseReportDatabase):
         # throws ReportValidationException
         return True
 
-    def get_converted_report(self, report):
+    def convert_report(self, report):
         return report.to_dict()
 
-    def create_report_to_db(self, converted_report):
+    def create_db_report(self, converted_report):
         return self.db_session.save('reports', converted_report)
