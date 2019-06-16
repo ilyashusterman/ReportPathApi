@@ -1,10 +1,11 @@
 import logging
 from collections import namedtuple
 
+from converters.live_report_converter import ReportConverter
 from models.live_report import LiveReport
-from converters.live_report_converter import convert_live_report
-from reports.report_firebase import ReportFireBaseImpl
-from reports.report_mongo import ReportMongoImpl
+
+from reports.db_implementations.report_firebase_impl import ReportFireBaseImpl
+from reports.db_implementations.report_mongo_impl import ReportMongoImpl
 
 
 from config.settings import MAX_DATABASE_CREATION_ERRORS
@@ -35,7 +36,7 @@ class ReportCreate(object):
         :return: create_response: CreateResponse, was_created_successfully: bool
         """
         parsed_report = LiveReport.load_live_report(live_report_dict)
-        converted_report = convert_live_report(parsed_report)
+        converted_report = ReportConverter.convert_live_report(parsed_report)
         create_response = self.create_one_report_to_databases(converted_report)
         return create_response, create_response.errors_count == self.no_errors_occurred
 

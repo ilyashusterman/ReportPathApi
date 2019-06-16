@@ -1,5 +1,5 @@
-from reports.test.database_test_case import TestDatabaseTestCase
-from reports.report_firebase import ReportFireBaseImpl
+from reports.db_implementations.test.database_test_case import TestDatabaseTestCase
+from reports.db_implementations.report_firebase_impl import ReportFireBaseImpl
 from db.exceptions import DatabaseException
 
 

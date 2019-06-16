@@ -1,5 +1,5 @@
-from reports.report_mongo import ReportMongoImpl
-from reports.test.database_test_case import TestDatabaseTestCase
+from reports.db_implementations.report_mongo_impl import ReportMongoImpl
+from reports.db_implementations.test.database_test_case import TestDatabaseTestCase
 
 
 class TestMongoDataBase(TestDatabaseTestCase):

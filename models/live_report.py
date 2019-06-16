@@ -21,6 +21,7 @@ class LiveReport(object):
         self.reliability = None
         self.pubMillis = None
         self.confidence = None
+        self.accurate = None
 
         self.report_text = None  # :type : ReportText
 
