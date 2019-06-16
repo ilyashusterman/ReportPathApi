@@ -16,7 +16,7 @@ class TestMongoDataBase(TestDatabaseTestCase):
         for now the database for test environment shoudl be off
         :return:
         """
-        self.assertTrue(self.mongo_db.db.is_connection_off())
+        self.assertTrue(self.mongo_db.db_session.is_connection_off())
 
     def test_get_converted_report(self):
         converted_report_mongo = self.mongo_db.get_converted_report(self.converted_report)

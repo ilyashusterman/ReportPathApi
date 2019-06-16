@@ -1,7 +1,7 @@
 # from firebase.firebase import FirebaseAuthentication
 # from firebase.firebase import FirebaseApplication
 
-from db.base_database import BaseDatabase
+from db.base_database import DatabaseSession
 from db.exceptions import DatabaseException
 
 # from config.settings import FIREBASE_URL
@@ -9,7 +9,7 @@ from config.settings import DEFAULT_FIREBASE_SECRET
 from config.settings import DEFAULT_FIREBASE_EMAIL
 
 
-class FireBaseDB(BaseDatabase):
+class FireBaseDBSession(DatabaseSession):
 
     @classmethod
     def init_firebase_client(cls, secret=DEFAULT_FIREBASE_SECRET, email=DEFAULT_FIREBASE_EMAIL,

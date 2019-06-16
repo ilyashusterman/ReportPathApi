@@ -4,7 +4,9 @@ from db.base_database import BasicDB
 
 
 class BaseReportDatabase(BasicDB):
-
+    """
+    Responsible for persisting report to its implementing instance
+    """
     def convert_and_create_report(self, report):
         """
         Creates validated report to db # throws error if report is not valid

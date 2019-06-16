@@ -2,7 +2,7 @@ from jsonschema import validate, ValidationError
 
 from reports.exceptions import ReportValidationException
 from reports.report_base_db import BaseReportDatabase
-from db.firebase.firebase_db import FireBaseDB
+from db.firebase.firebase_db_session import FireBaseDBSession
 
 from config.settings import DEFAULT_FIREBASE_REPORT_WEATHER
 from config.settings import DEFAULT_FIREBASE_REPORT_STATE
@@ -32,7 +32,7 @@ FIREBASE_REPORT_SCHEMA = {
 class ReportFireBaseImpl(BaseReportDatabase):
 
     def __init__(self):
-        self.db = FireBaseDB()
+        self.db_session = FireBaseDBSession()
 
     def validate_report(self, converted_report):
         self.validate_payload(converted_report)
@@ -66,4 +66,4 @@ class ReportFireBaseImpl(BaseReportDatabase):
         }
 
     def create_report_to_db(self, converted_report):
-        return self.db.save('reports', converted_report)
+        return self.db_session.save('reports', converted_report)

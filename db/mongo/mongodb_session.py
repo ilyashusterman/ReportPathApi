@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-from db.base_database import BaseDatabase
+from db.base_database import DatabaseSession
 from db.exceptions import DatabaseException
 
 from config.settings import MONGODB_HOST
@@ -8,7 +8,7 @@ from config.settings import MONGODB_PORT
 from config.settings import MONGODB_NAME
 
 
-class MongoDBBase(BaseDatabase):
+class MongoDBSession(DatabaseSession):
 
     def __init__(self, host=MONGODB_HOST, port=MONGODB_PORT, database_name=MONGODB_NAME):
         self.client = MongoClient(host=host, port=port, connect=False)

@@ -12,7 +12,7 @@ class BasicDB(object):
         return self.__class__.__name__
 
 
-class BaseDatabase(BasicDB):
+class DatabaseSession(BasicDB):
 
     @abstractmethod
     def save(self, table_name: str, dict_payload: dict):

@@ -1,4 +1,4 @@
-from db.mongo.mongodb_base import MongoDBBase
+from db.mongo.mongodb_session import MongoDBSession
 from reports.report_base_db import BaseReportDatabase
 
 MONGO_REPORT_SCHEMA = {
@@ -32,7 +32,7 @@ MONGO_REPORT_SCHEMA = {
 class ReportMongoImpl(BaseReportDatabase):
 
     def __init__(self):
-        self.db = MongoDBBase()
+        self.db_session = MongoDBSession()
 
     def validate_report(self, converted_report):
         #TODO clarify more columns and constraints:
@@ -47,4 +47,4 @@ class ReportMongoImpl(BaseReportDatabase):
         return report.to_dict()
 
     def create_report_to_db(self, converted_report):
-        return self.db.save('reports', converted_report)
+        return self.db_session.save('reports', converted_report)

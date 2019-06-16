@@ -11,10 +11,12 @@ from config.settings import MAX_DATABASE_CREATION_ERRORS
 from config.settings import NO_ERRORS_OCCURRED
 
 
-CreateResponse = namedtuple('CreateResponse', ['errors_count', 'databases', 'failed_databases'])
+CreateResponse = namedtuple('CreateResponse', ['errors_count', 'saved_ids', 'failed_databases'])
 
 
 def get_report_db_implementations():
+    #TODO should look for every class that inherit
+    # from BaseReportDatabase class, instead for this hard coded if there are more to come
     return [ReportMongoImpl(), ReportFireBaseImpl()]
 
 
@@ -44,13 +46,13 @@ class ReportCreate(object):
         :return: error_count : int
         """
         errors_count = 0
-        databases_response = dict()
+        saved_ids = dict()
         failed_databases = list()
         for report_db_impl in get_report_db_implementations():
             try:
                 inserted_id = report_db_impl.convert_and_create_report(live_report)
                 logging.info('Created %s for db %s Successfully' % (inserted_id, report_db_impl.name))
-                databases_response[report_db_impl.name] = inserted_id
+                saved_ids[report_db_impl.name] = inserted_id
             except Exception as e:
                 errors_count += 1
                 logging.error('Could not save to %s error:%s report \n %s' % (report_db_impl.name, e, live_report.to_dict()))
@@ -58,5 +60,5 @@ class ReportCreate(object):
                 if errors_count > self.max_creation_errors:
                     break
         return CreateResponse(errors_count=errors_count,
-                              databases=databases_response,
+                              saved_ids=saved_ids,
                               failed_databases=failed_databases)
